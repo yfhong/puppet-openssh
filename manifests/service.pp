@@ -5,9 +5,13 @@
 #
 class openssh::service {
 
-  service { $::openssh::service_name:
-    ensure     => running,
-    enable     => true,
+  service { 'sshd':
+    name       => $::openssh::service_name,
+    ensure     => $::openssh::service_ensure,
+    enable     => $::openssh::service_ensure ? {
+      'running' => true,
+      'stopped' => false,
+    },
     hasstatus  => true,
     hasrestart => true,
   }
