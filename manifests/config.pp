@@ -3,6 +3,8 @@
 # This class is called from openssh for service config.
 #
 class openssh::config {
+  $server_config = hiera_hash('openssh::server_config')
+
   file { 'openssh_server_config':
     path    => $::openssh::server_config_file,
     ensure  => 'present',
