@@ -5,12 +5,12 @@
 class openssh::config {
   $server_config = hiera_hash('openssh::server_config')
 
-  file { 'openssh_server_config':
-    path    => $::openssh::server_config_file,
-    ensure  => 'present',
-    owner   => root,
-    group   => $::openssh::params::root_group,
-    mode    => '0640',
-    content => template('openssh/sshd_config.erb'),
+  $::openssh::server_config.each |$key, $value| {
+    file_line { $key:
+      ensure => 'present',
+      path   => $::openssh::server_config_file,
+      line   => "${key} ${value}",
+      match  => "^#?${key}.*",
+    }
   }
 }
