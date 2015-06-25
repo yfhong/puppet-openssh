@@ -1,0 +1,12 @@
+## Managed by puppet
+## DONT edit it manually
+
+<%- @server_config.each do |k,v| -%>
+<%- if v.kind_of?(Array) -%>
+<%- v.each do |vline| -%>
+<%= "#{k} #{vline}" %>
+<%- end -%>
+<%- else -%>
+<%= "#{k} #{v}" %>
+<%- end -%>
+<%- end -%>
